@@ -111,6 +111,13 @@ define( 'WP_DEBUG', !!getenv_docker('WORDPRESS_DEBUG', '') );
 
 /* Add any custom values between this line and the "stop editing" line. */
 
+// Override site & home urls from database
+define( 'WP_SITEURL', getenv_docker('WORDPRESS_SITEURL', '') );
+define( 'WP_HOME', getenv_docker('WORDPRESS_HOME', '') );
+
+// Disables all core updates
+define( 'WP_AUTO_UPDATE_CORE', false );
+
 // If we're behind a proxy server and using HTTPS, we need to alert WordPress of that fact
 // see also https://wordpress.org/support/article/administration-over-ssl/#using-a-reverse-proxy
 if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && strpos($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false) {
