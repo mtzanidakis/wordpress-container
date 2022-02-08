@@ -64,7 +64,7 @@
         },
         {
             "action": {
-                "share": "/site$uri",
+                "share": "/site",
                 "fallback": {
                     "pass": "applications/wordpress/index"
                 }
