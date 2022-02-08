@@ -27,7 +27,7 @@ _w=/app
 
 [[ $PGID ]] && groupmod -g $PGID ${_g}
 [[ $PUID ]] && usermod -u $PUID ${_u}
-chown -R appuser:appuser /home/appuser
+chown -R appuser:appuser /home/appuser /site
 
 case "$1" in
 	app)
