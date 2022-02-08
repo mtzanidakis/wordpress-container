@@ -12,6 +12,7 @@ FROM wordpress:cli as wp-cli
 FROM alpine:3.15
 RUN apk add --no-cache \
 	bash \
+	less \
 	mysql-client \
 	php7 \
 	php7-bcmath \
@@ -46,8 +47,8 @@ RUN addgroup -g 10005 -S appuser && \
 	adduser -u 10005 -G appuser -S -s /usr/sbin/nologin -h /home/appuser appuser
 
 COPY --from=wp-download --chown=appuser:appuser /tmp/wordpress /site
+COPY --chown=appuser:appuser wp-config-docker.php /site/wp-config.php
 COPY --from=wp-cli /usr/local/bin/wp /usr/bin/wp
-COPY wp-config-docker.php /site/wp-config.php
 COPY ./unit-conf.json.template /var/lib/unit/conf.json.template
 COPY ./docker-entrypoint.sh /sbin/docker-entrypoint.sh
 
