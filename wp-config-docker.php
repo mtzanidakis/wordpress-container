@@ -119,8 +119,8 @@ define( 'WP_HOME', getenv_docker('WORDPRESS_HOME', '') );
 define( 'WP_AUTO_UPDATE_CORE', false );
 
 // Redis-Cache plugin configuration
-define('WP_REDIS_HOST', getenv_docker('WORDPRESS_REDIS_HOST') : '127.0.0.1');
-define('WP_REDIS_PORT', getenv_docker('WORDPRESS_REDIS_PORT') : 6379);
+define('WP_REDIS_HOST', getenv_docker('WORDPRESS_REDIS_HOST', '127.0.0.1') );
+define('WP_REDIS_PORT', getenv_docker('WORDPRESS_REDIS_PORT', 6379) );
 
 // If we're behind a proxy server and using HTTPS, we need to alert WordPress of that fact
 // see also https://wordpress.org/support/article/administration-over-ssl/#using-a-reverse-proxy
