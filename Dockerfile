@@ -20,6 +20,7 @@ RUN apk add --no-cache \
 	php7-ctype \
 	php7-curl \
 	php7-dom \
+	php7-exif \
 	php7-fileinfo \
 	php7-gd \
 	php7-iconv \
@@ -30,6 +31,7 @@ RUN apk add --no-cache \
 	php7-opcache \
 	php7-openssl \
 	php7-pecl-redis \
+	php7-pecl-imagick \
 	php7-phar \
 	php7-simplexml \
 	php7-tokenizer \
