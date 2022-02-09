@@ -3,7 +3,7 @@
         "http": {
             "body_read_timeout": 300,
             "send_timeout": 60,
-            "max_body_size": 33554432
+            "max_body_size": __MAX_BODY_SIZE__
         }
     },
     "listeners": {
@@ -33,8 +33,8 @@
                     "engine": "0",
                     "expose_php": "0",
                     "display_errors": "0",
-                    "post_max_size": "32M",
-                    "upload_max_filesize": "32M"
+                    "post_max_size": "__POST_MAX_SIZE__",
+                    "upload_max_filesize": "__UPLOAD_MAX_FILESIZE__"
                 }
             },
             "targets": {
