@@ -115,9 +115,6 @@ define( 'WP_DEBUG', !!getenv_docker('WORDPRESS_DEBUG', '') );
 define( 'WP_SITEURL', getenv_docker('WORDPRESS_SITEURL', '') );
 define( 'WP_HOME', getenv_docker('WORDPRESS_HOME', '') );
 
-// Disables all core updates
-define( 'WP_AUTO_UPDATE_CORE', false );
-
 // Redis-Cache plugin configuration
 define('WP_REDIS_HOST', getenv_docker('WORDPRESS_REDIS_HOST', '127.0.0.1') );
 define('WP_REDIS_PORT', getenv_docker('WORDPRESS_REDIS_PORT', 6379) );
