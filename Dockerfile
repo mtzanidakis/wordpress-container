@@ -23,6 +23,7 @@ RUN apk add --no-cache \
 	php7-exif \
 	php7-fileinfo \
 	php7-gd \
+	php7-gettext \
 	php7-iconv \
 	php7-intl \
 	php7-json \
@@ -37,7 +38,9 @@ RUN apk add --no-cache \
 	php7-tokenizer \
 	php7-xml \
 	php7-xmlreader \
+	php7-xmlrpc \
 	php7-xmlwriter \
+	php7-xsl \
 	php7-zip \
 	shadow \
 	su-exec \
