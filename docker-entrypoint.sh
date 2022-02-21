@@ -39,6 +39,13 @@ prepare_unit() {
 		${_t} > ${_c}
 }
 
+prepare_msmtp() {
+	local _defemail=wordpress@example.com
+	if [[ $EMAIL_FROM ]]; then
+		sed -i "s:${_defemail}:${EMAIL_FROM}:" /etc/msmtprc
+	fi
+}
+
 _u=appuser
 _g=${_u}
 _w=/app
@@ -49,6 +56,7 @@ chown -R appuser:appuser /home/appuser /site
 
 case "$1" in
 	app)
+		prepare_msmtp
 		prepare_unit
 		exec /usr/sbin/unitd --no-daemon
 		;;

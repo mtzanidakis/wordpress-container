@@ -13,6 +13,7 @@ FROM alpine:3.15
 RUN apk add --no-cache \
 	bash \
 	less \
+	msmtp \
 	mysql-client \
 	php7 \
 	php7-bcmath \
@@ -56,9 +57,13 @@ COPY --chown=appuser:appuser wp-config-docker.php /site/wp-config.php
 COPY --from=wp-cli /usr/local/bin/wp /usr/bin/wp
 COPY ./unit-conf.json.template /var/lib/unit/conf.json.template
 COPY ./docker-entrypoint.sh /sbin/docker-entrypoint.sh
+COPY ./msmtprc /etc/msmtprc
 
-RUN sed -i "s:memory_limit = 128M:memory_limit = 256M:g" /etc/php7/php.ini && \
-	install -d -m 1777 /usr/tmp && \
+RUN sed -i \
+	-e 's:memory_limit = 128M:memory_limit = 256M:g' \
+	-e 's:^;sendmail_path.*:sendmail_path = "/usr/bin/msmtp -t":' \
+	/etc/php7/php.ini
+RUN install -d -m 1777 /usr/tmp && \
 	chmod 555 /sbin/docker-entrypoint.sh
 
 EXPOSE 8080
