@@ -1,5 +1,5 @@
 FROM alpine:3.15 as wp-download
-ARG SUM=15746f848cd388e270bae612dccd0c83fa613259
+ARG SUM=19653440effafce0f768a1ba5092710717835bdc
 ARG VERSION
 WORKDIR /tmp
 ADD https://wordpress.org/wordpress-${VERSION}.tar.gz wordpress.tar.gz
