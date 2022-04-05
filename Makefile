@@ -1,6 +1,6 @@
 REGISTRY = hub.mtzanidakis.com
 IMAGE = wordpress
-VERSION = 5.9.2
+VERSION = 5.9.3
 
 .PHONY: all
 all: container-push
