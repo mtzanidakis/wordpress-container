@@ -1,5 +1,5 @@
-FROM alpine:3.15.4 as wp-download
-ARG SUM=cab576e112c45806c474b3cbe0d1263a2a879adf
+FROM alpine:3.16.0 as wp-download
+ARG SUM=7a5a6d0591771e730b05c49d0c3fc134624d0491
 ARG VERSION
 WORKDIR /tmp
 ADD https://wordpress.org/wordpress-${VERSION}.tar.gz wordpress.tar.gz
@@ -9,44 +9,43 @@ RUN echo "${SUM} *wordpress.tar.gz" | sha1sum -c && \
 
 FROM wordpress:cli as wp-cli
 
-FROM alpine:3.15.4
+FROM alpine:3.16.0
 RUN apk add --no-cache \
 	bash \
 	less \
 	msmtp \
 	mysql-client \
-	php7 \
-	php7-bcmath \
-	php7-bz2 \
-	php7-ctype \
-	php7-curl \
-	php7-dom \
-	php7-exif \
-	php7-fileinfo \
-	php7-gd \
-	php7-gettext \
-	php7-iconv \
-	php7-intl \
-	php7-json \
-	php7-mbstring \
-	php7-mysqli \
-	php7-opcache \
-	php7-openssl \
-	php7-pecl-redis \
-	php7-pecl-imagick \
-	php7-phar \
-	php7-simplexml \
-	php7-tokenizer \
-	php7-xml \
-	php7-xmlreader \
-	php7-xmlrpc \
-	php7-xmlwriter \
-	php7-xsl \
-	php7-zip \
+	php8 \
+	php8-bcmath \
+	php8-bz2 \
+	php8-ctype \
+	php8-curl \
+	php8-dom \
+	php8-exif \
+	php8-fileinfo \
+	php8-gd \
+	php8-gettext \
+	php8-iconv \
+	php8-intl \
+	php8-json \
+	php8-mbstring \
+	php8-mysqli \
+	php8-opcache \
+	php8-openssl \
+	php8-pecl-redis \
+	php8-pecl-imagick \
+	php8-phar \
+	php8-simplexml \
+	php8-tokenizer \
+	php8-xml \
+	php8-xmlreader \
+	php8-xmlwriter \
+	php8-xsl \
+	php8-zip \
 	shadow \
 	su-exec \
 	tini \
-	unit-php7 \
+	unit-php8 \
 	unzip
 
 RUN addgroup -g 10005 -S appuser && \
@@ -62,7 +61,7 @@ COPY ./msmtprc /etc/msmtprc
 RUN sed -i \
 	-e 's:memory_limit = 128M:memory_limit = 256M:g' \
 	-e 's:^;sendmail_path.*:sendmail_path = "/usr/bin/msmtp -t":' \
-	/etc/php7/php.ini
+	/etc/php8/php.ini
 RUN install -d -m 1777 /usr/tmp && \
 	chmod 555 /sbin/docker-entrypoint.sh
 
