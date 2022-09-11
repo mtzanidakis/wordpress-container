@@ -1,5 +1,5 @@
-FROM alpine:3.16.1 as wp-download
-ARG SUM=a1c02b6b754d74c08a70d5a8b604bdb72f1b276a
+FROM alpine:3.16.2 as wp-download
+ARG SUM=9348f0757c21504d085a6c866ccbb86573b39d6f
 ARG VERSION
 WORKDIR /tmp
 ADD https://wordpress.org/wordpress-${VERSION}.tar.gz wordpress.tar.gz
@@ -9,7 +9,7 @@ RUN echo "${SUM} *wordpress.tar.gz" | sha1sum -c && \
 
 FROM wordpress:cli as wp-cli
 
-FROM alpine:3.16.1
+FROM alpine:3.16.2
 RUN apk add --no-cache \
 	bash \
 	less \
