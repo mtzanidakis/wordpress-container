@@ -1,6 +1,7 @@
 REGISTRY = hub.mtzanidakis.com
 IMAGE = wordpress
-VERSION = 6.0.2
+VERSION = 6.1.1
+CHECKSUM = 80f0f829645dec07c68bcfe0a0a1e1d563992fcb
 
 .PHONY: all
 all: container-push
@@ -9,6 +10,7 @@ all: container-push
 container:
 	docker build \
 		--build-arg VERSION=$(VERSION) \
+		--build-arg CHECKSUM=$(CHECKSUM) \
 		--tag $(REGISTRY)/$(IMAGE):$(VERSION) .
 	docker tag $(REGISTRY)/$(IMAGE):$(VERSION) $(REGISTRY)/$(IMAGE):latest
 
