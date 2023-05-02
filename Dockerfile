@@ -1,4 +1,4 @@
-FROM alpine:3.16.3 as wp-download
+FROM alpine:3.16.5 as wp-download
 ARG CHECKSUM
 ARG VERSION
 WORKDIR /tmp
@@ -9,7 +9,7 @@ RUN echo "${CHECKSUM} *wordpress.tar.gz" | sha1sum -c && \
 
 FROM wordpress:cli as wp-cli
 
-FROM alpine:3.16.3
+FROM alpine:3.16.5
 RUN apk update && \
 	apk --no-cache upgrade
 RUN apk add --no-cache \
