@@ -15,37 +15,37 @@ RUN apk add --no-cache \
 	less \
 	msmtp \
 	mysql-client \
-	php81 \
-	php81-bcmath \
-	php81-bz2 \
-	php81-ctype \
-	php81-curl \
-	php81-dom \
-	php81-exif \
-	php81-fileinfo \
-	php81-gd \
-	php81-gettext \
-	php81-iconv \
-	php81-intl \
-	php81-json \
-	php81-mbstring \
-	php81-mysqli \
-	php81-opcache \
-	php81-openssl \
-	php81-pecl-redis \
-	php81-pecl-imagick \
-	php81-phar \
-	php81-simplexml \
-	php81-tokenizer \
-	php81-xml \
-	php81-xmlreader \
-	php81-xmlwriter \
-	php81-xsl \
-	php81-zip \
+	php82 \
+	php82-bcmath \
+	php82-bz2 \
+	php82-ctype \
+	php82-curl \
+	php82-dom \
+	php82-exif \
+	php82-fileinfo \
+	php82-gd \
+	php82-gettext \
+	php82-iconv \
+	php82-intl \
+	php82-json \
+	php82-mbstring \
+	php82-mysqli \
+	php82-opcache \
+	php82-openssl \
+	php82-pecl-redis \
+	php82-pecl-imagick \
+	php82-phar \
+	php82-simplexml \
+	php82-tokenizer \
+	php82-xml \
+	php82-xmlreader \
+	php82-xmlwriter \
+	php82-xsl \
+	php82-zip \
 	shadow \
 	su-exec \
 	tini \
-	unit-php81 \
+	unit-php82 \
 	unzip
 
 RUN addgroup -g 10005 -S appuser && \
@@ -58,14 +58,10 @@ COPY ./unit-conf.json.template /var/lib/unit/conf.json.template
 COPY ./docker-entrypoint.sh /sbin/docker-entrypoint.sh
 COPY ./msmtprc /etc/msmtprc
 
-RUN ln -sf php81 /usr/bin/php && \
-	ln -sf phar.phar81 /usr/bin/phar.phar && \
-	ln -sf phar81 /usr/bin/phar
-
 RUN sed -i \
 	-e 's:memory_limit = 128M:memory_limit = 256M:g' \
 	-e 's:^;sendmail_path.*:sendmail_path = "/usr/bin/msmtp -t":' \
-	/etc/php81/php.ini
+	/etc/php82/php.ini
 RUN install -d -m 1777 /usr/tmp && \
 	chmod 555 /sbin/docker-entrypoint.sh
 
