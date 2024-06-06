@@ -1,13 +1,13 @@
-FROM alpine:3.19 as wp-download
+FROM alpine:3.20 as wp-download
 WORKDIR /tmp
-ADD https://wordpress.org/wordpress-6.5.3.tar.gz wordpress.tar.gz
-RUN echo "8e4950d39990a2c200a7745d44d32b176baa5ac5 *wordpress.tar.gz" | sha1sum -c && \
+ADD https://wordpress.org/wordpress-6.5.4.tar.gz wordpress.tar.gz
+RUN echo "8c635f812ac7b6da985cc62885c101897229613f *wordpress.tar.gz" | sha1sum -c && \
 	tar zxf wordpress.tar.gz && \
 	rm -f -- wordpress/readme.html
 
 FROM wordpress:cli as wp-cli
 
-FROM alpine:3.19
+FROM alpine:3.20
 RUN apk update && \
 	apk --no-cache upgrade
 RUN apk add --no-cache \
@@ -57,6 +57,10 @@ COPY --from=wp-cli /usr/local/bin/wp /usr/bin/wp
 COPY ./unit-conf.json.template /var/lib/unit/conf.json.template
 COPY ./docker-entrypoint.sh /sbin/docker-entrypoint.sh
 COPY ./msmtprc /etc/msmtprc
+
+RUN ln -sf php82 /usr/bin/php && \
+	ln -sf phar82 /usr/bin/phar && \
+	ln -sf phar.phar82 /usr/bin/phar.phar
 
 RUN sed -i \
 	-e 's:memory_limit = 128M:memory_limit = 256M:g' \
