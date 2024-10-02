@@ -56,6 +56,7 @@ COPY --chown=appuser:appuser wp-config-docker.php /site/wp-config.php
 COPY --from=wp-cli /usr/local/bin/wp /usr/bin/wp
 COPY ./unit-conf.json.template /var/lib/unit/conf.json.template
 COPY ./docker-entrypoint.sh /sbin/docker-entrypoint.sh
+COPY ./apprun.sh /usr/bin/apprun
 COPY ./msmtprc /etc/msmtprc
 
 RUN ln -sf php82 /usr/bin/php && \
@@ -67,7 +68,7 @@ RUN sed -i \
 	-e 's:^;sendmail_path.*:sendmail_path = "/usr/bin/msmtp -t":' \
 	/etc/php82/php.ini
 RUN install -d -m 1777 /usr/tmp && \
-	chmod 555 /sbin/docker-entrypoint.sh
+	chmod 555 /sbin/docker-entrypoint.sh /usr/bin/apprun
 
 EXPOSE 8080
 WORKDIR /site
