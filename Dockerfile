@@ -1,13 +1,13 @@
-FROM alpine:3.21 as wp-download
+FROM alpine:3.22 as wp-download
 WORKDIR /tmp
-ADD https://wordpress.org/wordpress-6.8.1.tar.gz wordpress.tar.gz
-RUN echo "52d5f05c96a9155f78ed84700264307e5dea14b4 *wordpress.tar.gz" | sha1sum -c && \
+ADD https://wordpress.org/wordpress-6.8.2.tar.gz wordpress.tar.gz
+RUN echo "03baad10b8f9a416a3e10b89010d811d9361e468 *wordpress.tar.gz" | sha1sum -c && \
 	tar zxf wordpress.tar.gz && \
 	rm -f -- wordpress/readme.html
 
 FROM wordpress:cli as wp-cli
 
-FROM alpine:3.21
+FROM alpine:3.22
 RUN apk update && \
 	apk --no-cache upgrade
 RUN apk add --no-cache \
