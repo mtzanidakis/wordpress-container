@@ -1,7 +1,7 @@
 FROM alpine:3.22 AS wp-download
 WORKDIR /tmp
-ADD https://wordpress.org/wordpress-6.8.2.tar.gz wordpress.tar.gz
-RUN echo "03baad10b8f9a416a3e10b89010d811d9361e468 *wordpress.tar.gz" | sha1sum -c && \
+ADD https://wordpress.org/wordpress-6.8.3.tar.gz wordpress.tar.gz
+RUN echo "fd56bcdc15f1877e45dce67942ea75949ed650e8 *wordpress.tar.gz" | sha1sum -c && \
 	tar zxf wordpress.tar.gz && \
 	rm -f -- wordpress/readme.html
 
