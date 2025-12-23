@@ -1,13 +1,13 @@
-FROM alpine:3.22 AS wp-download
+FROM alpine:3.23 AS wp-download
 WORKDIR /tmp
-ADD https://wordpress.org/wordpress-6.8.3.tar.gz wordpress.tar.gz
-RUN echo "fd56bcdc15f1877e45dce67942ea75949ed650e8 *wordpress.tar.gz" | sha1sum -c && \
+ADD https://wordpress.org/wordpress-6.9.tar.gz wordpress.tar.gz
+RUN echo "256dda5bb6a43aecd806b7a62528f442c06e6c25 *wordpress.tar.gz" | sha1sum -c && \
 	tar zxf wordpress.tar.gz && \
 	rm -f -- wordpress/readme.html
 
 FROM wordpress:cli AS wp-cli
 
-FROM alpine:3.22
+FROM alpine:3.23
 RUN apk update && \
 	apk --no-cache upgrade
 RUN apk add --no-cache \
@@ -15,37 +15,37 @@ RUN apk add --no-cache \
 	less \
 	msmtp \
 	mysql-client \
-	php82 \
-	php82-bcmath \
-	php82-bz2 \
-	php82-ctype \
-	php82-curl \
-	php82-dom \
-	php82-exif \
-	php82-fileinfo \
-	php82-gd \
-	php82-gettext \
-	php82-iconv \
-	php82-intl \
-	php82-json \
-	php82-mbstring \
-	php82-mysqli \
-	php82-opcache \
-	php82-openssl \
-	php82-pecl-redis \
-	php82-pecl-imagick \
-	php82-phar \
-	php82-simplexml \
-	php82-tokenizer \
-	php82-xml \
-	php82-xmlreader \
-	php82-xmlwriter \
-	php82-xsl \
-	php82-zip \
+	php83 \
+	php83-bcmath \
+	php83-bz2 \
+	php83-ctype \
+	php83-curl \
+	php83-dom \
+	php83-exif \
+	php83-fileinfo \
+	php83-gd \
+	php83-gettext \
+	php83-iconv \
+	php83-intl \
+	php83-json \
+	php83-mbstring \
+	php83-mysqli \
+	php83-opcache \
+	php83-openssl \
+	php83-pecl-redis \
+	php83-pecl-imagick \
+	php83-phar \
+	php83-simplexml \
+	php83-tokenizer \
+	php83-xml \
+	php83-xmlreader \
+	php83-xmlwriter \
+	php83-xsl \
+	php83-zip \
 	shadow \
 	su-exec \
 	tini \
-	unit-php82 \
+	unit-php83 \
 	unzip
 
 RUN addgroup -g 10005 -S appuser && \
@@ -59,14 +59,14 @@ COPY ./docker-entrypoint.sh /sbin/docker-entrypoint.sh
 COPY ./apprun.sh /usr/bin/apprun
 COPY ./msmtprc /etc/msmtprc
 
-RUN ln -sf php82 /usr/bin/php && \
-	ln -sf phar82 /usr/bin/phar && \
-	ln -sf phar.phar82 /usr/bin/phar.phar
+RUN ln -sf php83 /usr/bin/php && \
+	ln -sf phar83 /usr/bin/phar && \
+	ln -sf phar.phar83 /usr/bin/phar.phar
 
 RUN sed -i \
 	-e 's:memory_limit = 128M:memory_limit = 256M:g' \
 	-e 's:^;sendmail_path.*:sendmail_path = "/usr/bin/msmtp -t":' \
-	/etc/php82/php.ini
+	/etc/php83/php.ini
 RUN install -d -m 1777 /usr/tmp && \
 	chmod 555 /sbin/docker-entrypoint.sh /usr/bin/apprun
 
