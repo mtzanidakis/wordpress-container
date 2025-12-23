@@ -2,7 +2,7 @@
 
 Run a containerized [WordPress](https://wordpress.org/) with [NGINX Unit](https://unit.nginx.org/).
 
-The container image is based on [Alpine Linux](https://www.alpinelinux.org/) and [PHP](https://www.php.net/) 8.2.
+The container image is based on [Alpine Linux](https://www.alpinelinux.org/) and [PHP](https://www.php.net/) 8.3.
 
 ## Configuration
 
