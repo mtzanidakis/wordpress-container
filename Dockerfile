@@ -15,37 +15,36 @@ RUN apk add --no-cache \
 	less \
 	msmtp \
 	mysql-client \
-	php83 \
-	php83-bcmath \
-	php83-bz2 \
-	php83-ctype \
-	php83-curl \
-	php83-dom \
-	php83-exif \
-	php83-fileinfo \
-	php83-gd \
-	php83-gettext \
-	php83-iconv \
-	php83-intl \
-	php83-json \
-	php83-mbstring \
-	php83-mysqli \
-	php83-opcache \
-	php83-openssl \
-	php83-pecl-redis \
-	php83-pecl-imagick \
-	php83-phar \
-	php83-simplexml \
-	php83-tokenizer \
-	php83-xml \
-	php83-xmlreader \
-	php83-xmlwriter \
-	php83-xsl \
-	php83-zip \
+	php85 \
+	php85-bcmath \
+	php85-bz2 \
+	php85-ctype \
+	php85-curl \
+	php85-dom \
+	php85-exif \
+	php85-fileinfo \
+	php85-gd \
+	php85-gettext \
+	php85-iconv \
+	php85-intl \
+	php85-json \
+	php85-mbstring \
+	php85-mysqli \
+	php85-openssl \
+	php85-pecl-redis \
+	php85-pecl-imagick \
+	php85-phar \
+	php85-simplexml \
+	php85-tokenizer \
+	php85-xml \
+	php85-xmlreader \
+	php85-xmlwriter \
+	php85-xsl \
+	php85-zip \
 	shadow \
 	su-exec \
 	tini \
-	unit-php83 \
+	unit-php85 \
 	unzip
 
 RUN addgroup -g 10005 -S appuser && \
@@ -59,14 +58,14 @@ COPY ./docker-entrypoint.sh /sbin/docker-entrypoint.sh
 COPY ./apprun.sh /usr/bin/apprun
 COPY ./msmtprc /etc/msmtprc
 
-RUN ln -sf php83 /usr/bin/php && \
-	ln -sf phar83 /usr/bin/phar && \
-	ln -sf phar.phar83 /usr/bin/phar.phar
+RUN ln -sf php85 /usr/bin/php && \
+	ln -sf phar85 /usr/bin/phar && \
+	ln -sf phar.phar85 /usr/bin/phar.phar
 
 RUN sed -i \
 	-e 's:memory_limit = 128M:memory_limit = 256M:g' \
 	-e 's:^;sendmail_path.*:sendmail_path = "/usr/bin/msmtp -t":' \
-	/etc/php83/php.ini
+	/etc/php85/php.ini
 RUN install -d -m 1777 /usr/tmp && \
 	chmod 555 /sbin/docker-entrypoint.sh /usr/bin/apprun
 
