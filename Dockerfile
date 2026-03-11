@@ -64,6 +64,8 @@ RUN ln -sf php85 /usr/bin/php && \
 
 RUN sed -i \
 	-e 's:memory_limit = 128M:memory_limit = 256M:g' \
+	-e 's:^;\(opcache.enable=1\):\1:' \
+	-e 's:^;\(opcache.enable_cli=\)0:\11:' \
 	-e 's:^;sendmail_path.*:sendmail_path = "/usr/bin/msmtp -t":' \
 	/etc/php85/php.ini
 RUN install -d -m 1777 /usr/tmp && \
