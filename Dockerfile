@@ -12,6 +12,7 @@ RUN apk update && \
 	apk --no-cache upgrade
 RUN apk add --no-cache \
 	bash \
+	freeunit-php85 \
 	less \
 	msmtp \
 	mysql-client \
@@ -44,7 +45,6 @@ RUN apk add --no-cache \
 	shadow \
 	su-exec \
 	tini \
-	unit-php85 \
 	unzip
 
 RUN addgroup -g 10005 -S appuser && \

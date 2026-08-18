@@ -1,6 +1,6 @@
-# Containerized WordPress with NGINX Unit
+# Containerized WordPress with FreeUnit
 
-Run a containerized [WordPress](https://wordpress.org/) with [NGINX Unit](https://unit.nginx.org/).
+Run a containerized [WordPress](https://wordpress.org/) with [FreeUnit](https://freeunit.org/).
 
 The container image is based on [Alpine Linux](https://www.alpinelinux.org/) and [PHP](https://www.php.net/) 8.5.
 
