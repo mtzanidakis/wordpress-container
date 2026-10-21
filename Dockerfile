@@ -16,12 +16,13 @@ RUN apk add --no-cache \
 	less \
 	msmtp \
 	mysql-client \
-	php85 \
+	"php85>=8.5.12" \
 	php85-bcmath \
 	php85-bz2 \
 	php85-ctype \
 	php85-curl \
 	php85-dom \
+	"php85-embed>=8.5.12" \
 	php85-exif \
 	php85-fileinfo \
 	php85-gd \
