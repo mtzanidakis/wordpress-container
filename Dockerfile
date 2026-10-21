@@ -67,6 +67,7 @@ RUN sed -i \
 	-e 's:^;\(opcache.enable=1\):\1:' \
 	-e 's:^;\(opcache.enable_cli=\)0:\11:' \
 	-e 's:^;sendmail_path.*:sendmail_path = "/usr/bin/msmtp -t":' \
+	-e 's:^;\(session.upload_progress.enabled =\) On:\1 Off:' \
 	/etc/php85/php.ini
 RUN install -d -m 1777 /usr/tmp && \
 	chmod 555 /sbin/docker-entrypoint.sh /usr/bin/apprun
