@@ -1,0 +1,73 @@
+name: WordPress update
+
+on:
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check for new WordPress version
+        id: check
+        run: |
+          current=$(sed -nE 's|.*wordpress-([0-9.]+)\.tar\.gz.*|\1|p' Dockerfile | head -n1)
+          latest=$(curl -fsSL https://api.wordpress.org/core/version-check/1.7/ | jq -r '.offers[0].current')
+          echo "current=$current latest=$latest"
+          if ! [[ $latest =~ ^[0-9]+(\.[0-9]+)+$ ]]; then
+            echo "::error::Unexpected version string: $latest"
+            exit 1
+          fi
+          if [ "$latest" = "$current" ] || [ "$(printf '%s\n%s\n' "$current" "$latest" | sort -V | tail -n1)" != "$latest" ]; then
+            echo "WordPress is up to date"
+            exit 0
+          fi
+          if git ls-remote --exit-code --heads origin "wordpress-$latest" >/dev/null; then
+            echo "Branch wordpress-$latest already exists, skipping"
+            exit 0
+          fi
+          echo "version=$latest" >> "$GITHUB_OUTPUT"
+
+      - name: Update Dockerfile and open pull request
+        if: steps.check.outputs.version
+        env:
+          VERSION: ${{ steps.check.outputs.version }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          url="https://wordpress.org/wordpress-$VERSION.tar.gz"
+          sha1=$(curl -fsSL "$url.sha1")
+          if ! [[ $sha1 =~ ^[0-9a-f]{40}$ ]]; then
+            echo "::error::Unexpected sha1: $sha1"
+            exit 1
+          fi
+          curl -fsSL -o "$RUNNER_TEMP/wordpress.tar.gz" "$url"
+          echo "$sha1 *$RUNNER_TEMP/wordpress.tar.gz" | sha1sum -c
+
+          sed -i -E \
+            -e "s|wordpress-[0-9.]+\.tar\.gz|wordpress-$VERSION.tar.gz|" \
+            -e "s|[0-9a-f]{40}( \*wordpress\.tar\.gz)|$sha1\1|" \
+            Dockerfile
+          git diff --exit-code --quiet Dockerfile && { echo "::error::Dockerfile unchanged"; exit 1; }
+
+          branch="wordpress-$VERSION"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -c "$branch"
+          git commit -am "chore: bump wordpress to $VERSION"
+          git push origin "$branch"
+          gh pr create \
+            --base main \
+            --head "$branch" \
+            --title "chore: bump wordpress to $VERSION" \
+            --body "Bump WordPress to [$VERSION](https://wordpress.org/news/category/releases/).
+
+          sha1: \`$sha1\` (verified against the downloaded tarball)"
